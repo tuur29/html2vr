@@ -1,0 +1,33 @@
+{
+  "name": "html2vr",
+  "version": "0.0.1",
+  "description": "A native JS library that generates a VR UI for switching between pages on your site",
+  "main": "html2vr.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tuur29/html2vr.git"
+  },
+  "keywords": [
+    "vr",
+    "js",
+    "ui"
+  ],
+  "author": "Tuur Lievens",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tuur29/html2vr/issues"
+  },
+  "homepage": "https://tuur29.github.io/html2vr",
+  "devDependencies": {
+    "eslint": "^5.12.1",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.14.0"
+  },
+  "dependencies": {
+    "aframe": "^0.8.2"
+  }
+}
