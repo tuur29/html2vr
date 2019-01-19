@@ -1,4 +1,4 @@
 
 # HTML2VR.js
 
-You can download the [last release here](../releases)
+You can download the [latest release here](https://github.com/tuur29/html2vr/releases).

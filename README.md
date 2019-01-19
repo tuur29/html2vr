@@ -12,10 +12,10 @@ This repo contains 3 modules:
 
 
 ## Library
-You can download the [last release here](./releases)
+You can download the [latest release here](https://github.com/tuur29/html2vr/releases).
 
 ## Demo
-You can view the [demo here](https://tuur29.github.io/html2vr/demo/site)
+You can view the [demo here](https://tuur29.github.io/html2vr/demo/site).
 
 ## Extension
 

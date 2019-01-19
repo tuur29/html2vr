@@ -1,0 +1,33 @@
+---
+---
+
+// Headers
+$header-heading-color: black !default;
+$header-bg-color: #ffecb3 !default;
+$header-bg-color-secondary: #ffab91 !default;
+
+// Text
+$section-headings-color: #ef5350 !default;
+$body-link-color: #ef5350 !default;
+
+@import "{{ site.theme }}";
+
+// fix color of buttons
+.page-header .btn {
+    color: $header-heading-color;
+    border-color: $header-heading-color;
+}
+
+// use tables for layouting
+.main-content table th, .main-content table td {
+    border-color: transparent !important;
+}
+
+.main-content thead {
+    display: none;
+}
+
+// hide the double title and explanation
+#html2vr, #html2vr + blockquote {
+    display: none;
+}
