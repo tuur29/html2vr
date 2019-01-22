@@ -14,8 +14,11 @@ This repo contains 3 modules:
 ## Library
 You can download the [latest release here](https://github.com/tuur29/html2vr/releases).
 
+Find the [documentation here](./library>).
+
 ## Demo
-You can view the [demo here](https://tuur29.github.io/html2vr/demo/site).
+See it in action on the [demo page](https://tuur29.github.io/html2vr/demo/site).
 
 ## Extension
 
+> Currently planned but not started.
