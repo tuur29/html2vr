@@ -43,17 +43,6 @@
 
     <main role="main">
 
-        <section class="jumbotron text-center">
-            <div class="container">
-                <h1 class="jumbotron-heading">HTML2VR Grid example</h1>
-                <p class="lead text-muted">This is a simple demo of the library. <br> Simply click the start button and put on your headset.</p>
-                <p>
-                    <a class="btn btn-primary my-2" href="https://tuur29.github.io/html2vr">More information</a>
-                    <a class="btn btn-secondary my-2" href="https://github.com/tuur29/html2vr">View on Github</a>
-                </p>
-            </div>
-        </section>
-
         <div class="album py-5 bg-light">
             <div class="container">
 
@@ -198,7 +187,8 @@
                         </div>
                     </div>
 
-                    <div class="col-md-4">
+                    <!-- This button is only visible in VR -->
+                    <div class="col-md-4" style="display: none;">
                         <div class="card mb-4 shadow-sm">
                             <a href="./index.html">
                                 <img class="bd-placeholder-img card-img-top" src="../../library/back.png" />

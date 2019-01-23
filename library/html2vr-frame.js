@@ -3,7 +3,7 @@
 
 // eslint-disable-next-line no-unused-vars
 function html2vrFrame(inputParams = {}) {
-  // get params
+  // TODO: move default params to seperate file
   const params = {
     columnCount: 4,
     backgroundColor: '#cecece',
@@ -144,6 +144,7 @@ function html2vrFrame(inputParams = {}) {
       const image = createNode(`<img id="${id}" src="${imageUrl}">`);
       assets.appendChild(image);
 
+      // TODO: add a default background color
       const screen = createNode(`
         <a-box class="html2vr-element"
           position="${x} ${y} ${z}"

@@ -9,6 +9,8 @@ Add both `html2vr.js` and `html2vr.js` to your project structure (same folder). 
 
 Lastly you need to add the `data-html2vr-page-type` and `data-html2vr-selector` properties to the body element of each page you want to support.
 
+> Note: Firefox is currently the only supported browser!
+
 ## Properties and settings 
 
 ```js
@@ -40,3 +42,8 @@ html2vr({
 </html>
 
 ```
+
+## Links
+
+View [the demo](../demo)  
+or discover [the extensions](../extension) for consumer usage.

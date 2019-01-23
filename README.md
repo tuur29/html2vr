@@ -8,17 +8,21 @@ html2vr is a native JS library that allows a webdeveloper to easily add a user i
 This repo contains 3 modules:
 - [**library**](./library): contains the script you can load on your site and documentation
 - [**demo**](./demo): a demo site (hosted on github pages) to discover the functionality
-- [**extension**](./extension): a browser extension that loads this library on some bigger sites like youtube, sketchfab...
+- [**extension**](./extension): browser extension that loads this library on some sites like youtube, sketchfab...
 
+> Note: Firefox is currently the only supported browser!
 
-## Library
-You can download the [latest release here](https://github.com/tuur29/html2vr/releases).
+---
 
+## [Library](./library)
+You can download the [latest release here](https://github.com/tuur29/html2vr/releases).  
 Find the [documentation here](./library>).
 
-## Demo
-See it in action on the [demo page](https://tuur29.github.io/html2vr/demo/site).
+## [Demo](./demo)
+See it in action on the [demo page](https://tuur29.github.io/html2vr/demo/site).  
+Or view the video below.
 
-## Extension
+## [Extension](./extension)
+> Planned but not currently not yet in development.
 
-> Currently planned but not started.
+Extensions for Chrome and Firefox that uses the HTML2VR library to generate a VR version.
