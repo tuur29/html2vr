@@ -3,7 +3,10 @@
 
 > Note: Firefox is currently the only supported browser!
 
-You can view the [demo here](https://tuur29.github.io/html2vr/demo/site).
+Test it yourself on the [demo page](https://tuur29.github.io/html2vr/demo/site).  
+Or see it in action in the video below.
+
+[![Click to play video](./preview.jpg)](./preview.mp4)
 
 ## Links
 
