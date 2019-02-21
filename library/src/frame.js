@@ -1,15 +1,7 @@
 
-// TODO: bundle this code into a module (https://webpack.js.org/guides/author-libraries/)
+// import 'aframe';
 
-// eslint-disable-next-line no-unused-vars
-function html2vrFrame(inputParams = {}) {
-  // TODO: move default params to seperate file
-  const params = {
-    columnCount: 4,
-    backgroundColor: '#cecece',
-    ...inputParams,
-  };
-
+export function render3DScene(params = {}) {
   const props = [];
 
   // HELPERS
@@ -74,8 +66,9 @@ function html2vrFrame(inputParams = {}) {
   // load the needed libraries and setup the 3d environment
   function setup() {
     // load webvr library
+    // TODO: change this to a import statement at top?
     document.head.appendChild(createScriptNode(`
-      <script src="https://aframe.io/releases/0.8.0/aframe.min.js" class="html2vr-external"></script>
+      <script src="${params.aframeUrl}" class="html2vr-external"></script>
     `));
 
     // setup vr environment
@@ -85,10 +78,13 @@ function html2vrFrame(inputParams = {}) {
     assets = createNode('<a-assets class="html2vr-permanent" />');
     scene.appendChild(assets);
 
-    // TODO: improve path when loading back button image
-    const base = Array.from(document.querySelectorAll('script')).filter(s => s.src.includes('html2vr'))[0].src.replace(/[^/]*$/, '');
-    const location = base + 'back.png';
-    const back = createNode(`<img id="back" src="${location}">`);
+    // TODO: Fix svg back button
+    const back = createNode(`
+      <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+        width="50px" height="50px" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve">
+        <path d="M427,234.625H167.296l119.702-119.702L256,85L85,256l171,171l29.922-29.924L167.296,277.375H427V234.625z" fill="#000"/>
+      </svg>
+    `);
     assets.appendChild(back);
 
     const camera = createNode('<a-camera class="html2vr-permanent"><a-cursor></a-cursor></a-camera>');

@@ -5,6 +5,9 @@
     },
     "rules": {
         "max-len": 0,
-        "prefer-template": 0
+        "prefer-template": 0,
+        "no-named-default": 0,
+        "import/prefer-default-export": 0,
+        "indent": ["error", 2, { "MemberExpression": "off" }]
     }
 }

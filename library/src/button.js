@@ -1,15 +1,5 @@
 
-// TODO: bundle this code into a module (https://webpack.js.org/guides/author-libraries/)
-
-// eslint-disable-next-line no-unused-vars
-function html2vr(inputParams = {}) {
-  // TODO: move default params to seperate file
-  const params = {
-    columnCount: 4,
-    backgroundColor: '#cecece',
-    ...inputParams,
-  };
-
+export function add3DButton(params = {}) {
   // HELPERS
   function createExecutableNode(string) {
     return document.createRange().createContextualFragment(string);
@@ -52,8 +42,11 @@ function html2vr(inputParams = {}) {
   // load the needed libraries and setup the 3d environment
   function openPopup() {
     // TODO: improve path when loading frame script
-    const base = Array.from(document.querySelectorAll('script')).filter(s => s.src.includes('html2vr'))[0].src.replace(/[^/]*$/, '');
-    const location = base + 'html2vr-frame.js';
+    const base = Array.from(document.querySelectorAll('script'))
+                      .filter(s => s.src.includes('html2vr'))[0]
+                      .src.replace(/[^/]*$/, '');
+
+    const location = base + 'html2vr.min.js';
 
     popup = window.open('', '3D View', 'toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes,height=800,width=800');
     popup.document.body.appendChild(createExecutableNode(`<div id='loader'></div><style>
@@ -78,7 +71,7 @@ function html2vr(inputParams = {}) {
     popup.document.head.appendChild(createExecutableNode(`<script src="${location}"></script>`));
     // TODO: check if script is actually loaded
     setTimeout(() => {
-      popup.document.head.appendChild(createExecutableNode(`<script>html2vrFrame(JSON.parse('${JSON.stringify(params)}'))</script>`));
+      popup.document.head.appendChild(createExecutableNode(`<script>html2vr.render(JSON.parse('${JSON.stringify(params)}'))</script>`));
     }, 1500);
   }
 
