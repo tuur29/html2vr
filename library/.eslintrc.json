@@ -8,6 +8,8 @@
         "prefer-template": 0,
         "no-named-default": 0,
         "import/prefer-default-export": 0,
+        "no-plusplus": 0,
+        "no-bitwise": 0,
         "indent": ["error", 2, { "MemberExpression": "off" }]
     }
 }

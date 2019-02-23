@@ -1,6 +1,7 @@
 
 import { add3DButton } from './button';
 import { render3DScene } from './frame';
+import { open3DPopup } from './popup';
 import { defaultConfig } from './defaultConfig';
 
 export function init(params = {}) {
@@ -19,4 +20,13 @@ export function render(params = {}) {
   };
 
   render3DScene(config);
+}
+
+export function openPopup(params = {}) {
+  const config = {
+    ...defaultConfig,
+    ...params,
+  };
+
+  open3DPopup(config);
 }

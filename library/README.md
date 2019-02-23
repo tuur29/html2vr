@@ -39,6 +39,8 @@ Properties:
 </html>
 ```
 
+You can also add your own button and call `html2vr.openPopup({...})` to open the popup.
+
 ## Development
 
 Dev: `npm start`
