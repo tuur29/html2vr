@@ -1,5 +1,9 @@
 
-import { createNode, addGaze, getProperties } from '../helpers';
+import {
+  createNode,
+  addGaze,
+  getProperties,
+} from '../helpers';
 
 export class DetailPage {
   static getData(sourceDOM) {
@@ -25,10 +29,9 @@ export class DetailPage {
 
     // render a back button
     const back = createNode(`
-        <a-box
+        <a-image
           class="html2vr-element"
           position="-4 4 -6"
-          width="1" height="1" depth="0.1"
           src="#back"
         />
     `);
@@ -39,7 +42,6 @@ export class DetailPage {
       window.opener.history.back();
       setTimeout(() => {
         // TODO: make the onload listener at bottom work, then remove this
-        // eslint-disable-next-line no-use-before-define
         callback('refresh');
       }, 500);
     });

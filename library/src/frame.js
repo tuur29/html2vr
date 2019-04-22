@@ -1,4 +1,5 @@
 
+import back from './assets/back.svg';
 import { createExecutableNode, createNode, getProperties } from './helpers';
 import { OverviewPage, DetailPage, ErrorPage } from './pages';
 
@@ -19,14 +20,14 @@ export function render3DScene(params = {}) {
     const assets = createNode('<a-assets class="html2vr-permanent" />');
     scene.appendChild(assets);
 
-    // TODO: Fix svg back button
-    const back = createNode(`
-      <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-        width="50px" height="50px" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve">
-        <path d="M427,234.625H167.296l119.702-119.702L256,85L85,256l171,171l29.922-29.924L167.296,277.375H427V234.625z" fill="#000"/>
-      </svg>
+    // eslint-disable-next-line global-require
+    const backButton = createNode(`
+        <img
+          id="back"
+          src="data:image/svg+xml;base64,${window.btoa(back)}"
+        />
     `);
-    assets.appendChild(back);
+    assets.appendChild(backButton);
 
     const camera = createNode('<a-camera class="html2vr-permanent"><a-cursor></a-cursor></a-camera>');
     scene.appendChild(camera);

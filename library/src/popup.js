@@ -46,6 +46,10 @@ export function open3DPopup(params = {}) {
             0%  { transform: rotate(0deg); }
             100%  { transform: rotate(360deg); }
         }
+
+        a-assets {
+          display: none;
+        }
     </style>
   `, popup.document));
 
