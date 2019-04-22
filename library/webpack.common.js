@@ -1,16 +1,12 @@
 /* eslint-disable import/no-extraneous-dependencies */
 
 const path = require('path');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
 
 // TODO: don't allow in nodejs
 module.exports = {
   entry: {
     html2vr: './src/index.js',
   },
-  plugins: [
-    new CleanWebpackPlugin(['dist']),
-  ],
   module: {
     rules: [
       {
@@ -27,8 +23,8 @@ module.exports = {
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: '[name].min.js',
-    library: '[name]',
+    filename: 'html2vr.min.js',
+    library: 'html2vr',
     // TODO: what is libraryTarget exactly?
     libraryTarget: 'var',
   },
