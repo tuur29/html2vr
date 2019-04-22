@@ -27,6 +27,7 @@ export function open3DPopup(params = {}) {
     <style>
         body { 
             background: ${params.backgroundColor};
+            margin: 0;
         }
 
         #loader {
@@ -46,12 +47,16 @@ export function open3DPopup(params = {}) {
             100%  { transform: rotate(360deg); }
         }
     </style>
-  `));
+  `, popup.document));
 
-  popup.document.head.appendChild(createExecutableNode(`<script src="${location}"></script>`));
+  popup.document.head.appendChild(
+    createExecutableNode(`<script src="${location}"></script>`, popup.document),
+  );
   // TODO: check if script is actually loaded instead of timeout
   setTimeout(() => {
-    popup.document.head.appendChild(createExecutableNode(`<script>html2vr.render(JSON.parse('${JSON.stringify(params)}'))</script>`));
+    popup.document.head.appendChild(
+      createExecutableNode(`<script>html2vr.render(JSON.parse('${JSON.stringify(params)}'))</script>`, popup.document),
+    );
   }, 1500);
 
   return popup;

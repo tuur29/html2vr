@@ -1,8 +1,8 @@
 // HTML
 
 // Create a bunch of html nodes at once, does run scripts
-export function createExecutableNode(string) {
-  return document.createRange().createContextualFragment(string);
+export function createExecutableNode(string, doc = window.document) {
+  return doc.createRange().createContextualFragment(string);
 }
 
 // Create a bunch of html nodes at once, doesn't run embedded scripts
