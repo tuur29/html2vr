@@ -17,7 +17,7 @@ Settings: [view defaultConfig.js](./src/defaultConfig.js)
 
 Properties:
 
-``` html
+```html
     data-html2vr-page-type=""        <!-- grid, detail -->
     data-html2vr-selector=""         <!-- querySelector(All) -->
 ```

@@ -61,9 +61,8 @@ export class OverviewPage {
 
       addGaze(screen, () => {
         window.opener.location = linkUrl;
-        // TODO: make the onload listener at bottom work, then remove this
+        // TODO: make the onload listener at frame.js work, then remove this
         setTimeout(() => {
-          // eslint-disable-next-line no-use-before-define
           callback('refresh');
         }, 500);
       });

@@ -41,7 +41,7 @@ export class DetailPage {
     addGaze(back, () => {
       window.opener.history.back();
       setTimeout(() => {
-        // TODO: make the onload listener at bottom work, then remove this
+        // TODO: make the onload listener at frame.js work, then remove this
         callback('refresh');
       }, 500);
     });

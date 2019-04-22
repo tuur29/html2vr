@@ -12,4 +12,7 @@ export const defaultConfig = {
   // can be url to different cdn or absolute path to local
   aframeUrl: 'https://aframe.io/releases/0.8.2/aframe.min.js',
 
+  // only set this to a absolute link when the browser cant find the library in the popup
+  scriptLocation: undefined,
+
 };

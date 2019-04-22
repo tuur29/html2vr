@@ -2,15 +2,14 @@
 import { createExecutableNode } from './helpers';
 
 export function open3DPopup(params = {}) {
-  // TODO: improve path when loading frame script
-  const location = Array.from(document.querySelectorAll('script'))
+  const location = params.scriptLocation || Array.from(document.querySelectorAll('script'))
     .filter(
-      s => s.src.includes('html2vr'),
+      s => s.src.includes('html2vr.min.js'),
     )[0].src
     .replace(/[^/]*$/, '')
         + 'html2vr.min.js';
 
-  const popup = window.open('', '3D View', `
+  const popup = window.open('', 'HTML2VR', `
     toolbar=no,
     location=no,
     directories=no,
@@ -21,6 +20,9 @@ export function open3DPopup(params = {}) {
     height=800,
     width=800
   `);
+
+  // Stop loader from getting re-added when user reloads window and re-focusses popup by clicking button
+  if (popup.document.querySelector('#loader')) return popup;
 
   popup.document.body.appendChild(createExecutableNode(`
     <div id='loader'></div>
@@ -53,15 +55,17 @@ export function open3DPopup(params = {}) {
     </style>
   `, popup.document));
 
-  popup.document.head.appendChild(
-    createExecutableNode(`<script src="${location}"></script>`, popup.document),
-  );
-  // TODO: check if script is actually loaded instead of timeout
-  setTimeout(() => {
-    popup.document.head.appendChild(
-      createExecutableNode(`<script>html2vr.render(JSON.parse('${JSON.stringify(params)}'))</script>`, popup.document),
-    );
-  }, 1500);
+  const scripts = createExecutableNode(`
+    <script id="lib" src="${location}"></script>
+    <script>
+        var script = document.head.querySelector("#lib");
+        script.onload = function() {
+          html2vr.render(JSON.parse('${JSON.stringify(params)}'))
+        }
+    </script>
+  `, popup.document);
+
+  popup.document.head.appendChild(scripts);
 
   return popup;
 }

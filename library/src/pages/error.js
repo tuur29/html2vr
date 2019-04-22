@@ -31,8 +31,7 @@ export class ErrorPage {
     addGaze(back, () => {
       window.opener.history.back();
       setTimeout(() => {
-        // TODO: make the onload listener at bottom work, then remove this
-        // eslint-disable-next-line no-use-before-define
+        // TODO: make the onload listener at frame.js work, then remove this
         callback('refresh');
       }, 500);
     });
