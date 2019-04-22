@@ -3,7 +3,6 @@ import { createNode, createExecutableNode } from './helpers';
 import { open3DPopup } from './popup';
 
 export function add3DButton(params = {}) {
-  let VRMode = false;
   let popup;
 
   window.document.head.appendChild(createExecutableNode(`
@@ -32,14 +31,18 @@ export function add3DButton(params = {}) {
   const button = createNode('<button href="#" id="html2vr-button">3D</button>');
 
   button.addEventListener('click', () => {
-    if (VRMode && popup) {
+    if (popup) {
       popup.close();
+      popup = null;
       button.innerHTML = '3D';
     } else {
       popup = open3DPopup(params);
+      popup.onbeforeunload = () => {
+        popup = null;
+        button.innerHTML = '3D';
+      };
       button.innerHTML = 'Exit';
     }
-    VRMode = !VRMode;
   });
   document.body.appendChild(button);
 }
