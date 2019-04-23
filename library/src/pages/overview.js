@@ -4,6 +4,7 @@ import {
   addGaze,
   createHashCode,
   getProperties,
+  navigate,
 } from '../helpers';
 
 export class OverviewPage {
@@ -60,11 +61,7 @@ export class OverviewPage {
       scene.appendChild(screen);
 
       addGaze(screen, () => {
-        window.opener.location = linkUrl;
-        // TODO: make the onload listener at frame.js work, then remove this
-        setTimeout(() => {
-          callback('refresh');
-        }, 500);
+        navigate(linkUrl, () => callback('refresh'));
       });
     });
   }

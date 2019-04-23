@@ -83,10 +83,4 @@ export function render3DScene(params = {}) {
   scene.addEventListener('loaded', () => {
     draw();
   });
-
-  // FIXME: this doesnt run currently refreshing manually, see TODO's above
-  window.opener.addEventListener('load', () => {
-    console.log('All assets are loaded');
-    refresh();
-  });
 }

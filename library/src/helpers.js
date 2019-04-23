@@ -70,3 +70,26 @@ export function addGaze(element, callback) {
     clearInterval(interval);
   });
 }
+
+export function navigate(url, callback) {
+  const oldUrl = window.opener.location;
+  window.opener.location = url;
+
+  // TODO: show loading icon in VR
+  // wait until new document exists
+  const interval = setInterval(() => {
+    if (window.opener.location !== oldUrl) {
+      setTimeout(() => {
+        // refresh when new document has finished loading
+        if (window.opener.document.readyState === 'complete') {
+          callback('refresh');
+        } else {
+          window.opener.addEventListener('load', () => {
+            callback('refresh');
+          });
+        }
+      }, 10);
+      clearInterval(interval);
+    }
+  }, 50);
+}

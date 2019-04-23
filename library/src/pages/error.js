@@ -1,5 +1,5 @@
 
-import { createNode, addGaze } from '../helpers';
+import { createNode, addGaze, navigate } from '../helpers';
 
 export class ErrorPage {
   static draw(scene, data, params, callback) {
@@ -29,11 +29,7 @@ export class ErrorPage {
     scene.appendChild(back);
 
     addGaze(back, () => {
-      window.opener.history.back();
-      setTimeout(() => {
-        // TODO: make the onload listener at frame.js work, then remove this
-        callback('refresh');
-      }, 500);
+      navigate(window.opener.document.referrer, () => callback('refresh'));
     });
   }
 }

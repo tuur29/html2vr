@@ -3,6 +3,7 @@ import {
   createNode,
   addGaze,
   getProperties,
+  navigate,
 } from '../helpers';
 
 export class DetailPage {
@@ -39,11 +40,7 @@ export class DetailPage {
     scene.appendChild(back);
 
     addGaze(back, () => {
-      window.opener.history.back();
-      setTimeout(() => {
-        // TODO: make the onload listener at frame.js work, then remove this
-        callback('refresh');
-      }, 500);
+      navigate(window.opener.document.referrer, () => callback('refresh'));
     });
   }
 }
