@@ -1,9 +1,11 @@
 
-import { createNode, addGaze, navigate } from '../helpers';
+import { createVRNode, addBackButton } from '../helpers';
 
 export class ErrorPage {
   static draw(scene, data, params, callback) {
-    const text = createNode(`
+    addBackButton(scene, callback);
+
+    const text = createVRNode(`
         <a-text 
           class="html2vr-element"
           position="0 1.5 -6"
@@ -16,20 +18,5 @@ export class ErrorPage {
         />
     `);
     scene.appendChild(text);
-
-    // render a back button
-    const back = createNode(`
-        <a-box
-          class="html2vr-element"
-          position="-4 4 -6"
-          width="1" height="1" depth="0.1"
-          src="#back"
-        />
-    `);
-    scene.appendChild(back);
-
-    addGaze(back, () => {
-      navigate(window.opener.document.referrer, () => callback('refresh'));
-    });
   }
 }

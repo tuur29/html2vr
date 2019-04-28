@@ -1,12 +1,27 @@
+
+function getParentWindow() {
+  // Chrome doesnt allow you to change url via window.opener
+  if (window.opener.location) {
+    return window.opener;
+  }
+
+  return window.parent;
+}
+
+// redirect all messages from popup to parent
+export function linkConsoleToParent() {
+  window.console = getParentWindow().console;
+}
+
 // HTML
 
 // Create a bunch of html nodes at once, does run scripts
-export function createExecutableNode(string, doc = window.document) {
+export function createVRNode(string, doc = window.document) {
   return doc.createRange().createContextualFragment(string);
 }
 
 // Create a bunch of html nodes at once, doesn't run embedded scripts
-export function createNode(string) {
+export function createHTMLNode(string) {
   const template = document.createElement('template');
   const html = string.trim();
   template.innerHTML = html;
@@ -43,50 +58,62 @@ export function getProperties(document) {
 
 // 3D / VR
 
-// Add a crosshair to scene, gaze at item to click it
-export function addGaze(element, callback) {
-  const wait = 1500;
-  const pressDepth = 0.2;
-  let counter = 0;
-  let interval;
+export function getScene() {
+  return document.getElementById('scene');
+}
 
-  element.addEventListener('mouseenter', () => {
-    interval = setInterval(() => {
-      counter += 10;
-      element.setAttribute('depth', 0.1 + pressDepth - (counter / wait) * pressDepth);
-      if (counter > wait) {
-        counter = 0;
-        element.setAttribute('depth', 0.1);
-        clearInterval(interval);
+// show/hide loading indicator
+export function startLoading() {
+  document.getElementById('spinner').setAttribute('visible', 'true');
+}
+export function stopLoading() {
+  document.getElementById('spinner').setAttribute('visible', 'false');
+}
 
-        callback();
+function finishNavigation(callback) {
+  callback('refresh');
+  linkConsoleToParent();
+  stopLoading();
+}
+
+function waitForNavigation(callback) {
+  const oldUrl = getParentWindow().location.href;
+
+  const interval = setInterval(() => {
+    if (getParentWindow().location.href !== oldUrl) {
+      clearInterval(interval);
+      // refresh when new document has finished loading
+      if (getParentWindow().document.readyState === 'complete') {
+        finishNavigation(callback);
+      } else {
+        getParentWindow().addEventListener('load', () => {
+          finishNavigation(callback);
+        });
       }
-    }, 10);
-    element.setAttribute('depth', 0.1 + pressDepth);
-  });
-
-  element.addEventListener('mouseleave', () => {
-    element.setAttribute('depth', 0.1);
-    clearInterval(interval);
-  });
+    }
+  }, 50);
 }
 
 export function navigate(url, callback) {
-  const oldUrl = window.opener.location;
-  window.opener.location = url;
+  startLoading();
+  getParentWindow().location.href = url;
+  waitForNavigation(callback);
+}
 
-  // TODO: show loading icon in VR
-  // wait until new document exists
-  setTimeout(() => {
-    if (window.opener.location === oldUrl) return;
-
-    // refresh when new document has finished loading
-    if (window.opener.document.readyState === 'complete') {
-      callback('refresh');
-    } else {
-      window.opener.addEventListener('load', () => {
-        callback('refresh');
-      });
-    }
-  }, 50);
+export function addBackButton(scene, callback) {
+  // render a back button
+  const back = createVRNode(`
+    <a-box
+      class="html2vr-element clickable"
+      position="-4 4 -6"
+      width="1" height="1" depth="0.1"
+      color="white"
+      src="#back" />
+  `);
+  back.querySelector('*').addEventListener('click', () => {
+    startLoading();
+    getParentWindow().history.back();
+    waitForNavigation(callback);
+  });
+  scene.appendChild(back);
 }

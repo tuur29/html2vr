@@ -1,5 +1,5 @@
 
-import { createExecutableNode } from './helpers';
+import { createVRNode } from './helpers';
 
 export function open3DPopup(params = {}) {
   const location = params.scriptLocation || Array.from(document.querySelectorAll('script'))
@@ -24,7 +24,7 @@ export function open3DPopup(params = {}) {
   // Stop loader from getting re-added when user reloads window and re-focusses popup by clicking button
   if (popup.document.querySelector('#loader')) return popup;
 
-  popup.document.body.appendChild(createExecutableNode(`
+  popup.document.body.appendChild(createVRNode(`
     <div id='loader'></div>
     <style>
         body { 
@@ -55,7 +55,7 @@ export function open3DPopup(params = {}) {
     </style>
   `, popup.document));
 
-  const scripts = createExecutableNode(`
+  const scripts = createVRNode(`
     <script id="lib" src="${location}"></script>
     <script>
         var script = document.head.querySelector("#lib");

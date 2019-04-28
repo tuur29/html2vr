@@ -1,45 +1,86 @@
 
 import back from './assets/back.svg';
-import { createExecutableNode, createNode, getProperties } from './helpers';
+import {
+  createVRNode,
+  getProperties,
+  linkConsoleToParent,
+} from './helpers';
 import { OverviewPage, DetailPage, ErrorPage } from './pages';
 
 export function render3DScene(params = {}) {
   let scene;
+  let script;
 
   // load the needed libraries and setup the 3d environment
-  function setup() {
-    // load webvr library
-    document.head.appendChild(createExecutableNode(`
-      <script src="${params.aframeUrl}" class="html2vr-external"></script>
-    `));
+  function loadLibraries() {
+    linkConsoleToParent();
 
+    // load webvr library
+    script = document.createElement('script');
+    script.src = params.aframeUrl;
+    document.head.appendChild(script);
+
+    return new Promise((resolve) => {
+      script.addEventListener('load', () => resolve());
+    });
+  }
+
+  function setupScene() {
     // setup vr environment
-    scene = createNode(`<a-scene class="html2vr-permanent" background="color: ${params.backgroundColor}" />`);
+    scene = document.createElement('a-scene');
+    scene.setAttribute('id', 'scene');
+    scene.setAttribute('class', 'html2vr-permanent');
+    scene.setAttribute('background', `color: ${params.backgroundColor}`);
     document.body.appendChild(scene);
 
-    const assets = createNode('<a-assets class="html2vr-permanent" />');
-    scene.appendChild(assets);
+    return new Promise((resolve) => {
+      scene.addEventListener('loaded', () => {
+        const assets = createVRNode('<a-assets class="html2vr-permanent" />');
 
-    // eslint-disable-next-line global-require
-    const backButton = createNode(`
-        <img
-          id="back"
-          src="data:image/svg+xml;base64,${window.btoa(back)}"
-        />
-    `);
-    assets.appendChild(backButton);
+        // eslint-disable-next-line global-require
+        const backButton = createVRNode(`
+            <img
+              id="back"
+              src="data:image/svg+xml;base64,${window.btoa(back)}"
+            />
+        `);
+        assets.appendChild(backButton);
+        scene.appendChild(assets);
 
-    const camera = createNode('<a-camera class="html2vr-permanent"><a-cursor></a-cursor></a-camera>');
-    scene.appendChild(camera);
+        const fuzeTime = 1500;
+        const camera = createVRNode(`
+          <a-entity camera look-controls>
+            <a-entity cursor="fuse: true; fuseTimeout: ${fuzeTime};"
+                      raycaster="far: 20; interval: ${fuzeTime / 5}; objects: .clickable"
+                      animation__click="property: scale; startEvents: click; easing: easeInCubic; dur: ${fuzeTime / 10}; from: 0.1 0.1 0.1; to: 1 1 1"
+                      animation__fusing="property: scale; startEvents: fusing; easing: easeInCubic; dur: ${fuzeTime}; from: 1 1 1; to: 0.1 0.1 0.1"
+                      animation__mouseleave="property: scale; startEvents: mouseleave; easing: easeInCubic; dur: ${fuzeTime / 3}; to: 1 1 1"
+                      material="color: black; shader: flat"
+                      position="0 0 -3"
+                      geometry="primitive: ring; radiusInner: 0.05; radiusOuter: 0.07;" />
+            <a-entity id="spinner"
+                      visible="false"
+                      material="color: ${params.backgroundColor}; shader: flat"
+                      position="0 0 1"
+                      geometry="primitive: ring; radiusInner: 0.03; radiusOuter: 0.05; thetaLength: 180;"
+                      animation="property: geometry.thetaStart; to: 360 0; loop: true; dur: 1000; easing: linear" />
+          </a-entity>
+        `);
+        scene.appendChild(camera);
 
-    const floor = createNode(`
-      <a-circle class="html2vr-permanent"
-        position="0 -1.5 0"
-        rotation="-90 0 0"
-        color="#9d9d9d"
-        radius="4" />
-    `);
-    scene.appendChild(floor);
+        // TODO: darken backgroundcolor for floor
+        const floor = createVRNode(`
+          <a-circle class="html2vr-permanent"
+            position="0 -1.5 0"
+            rotation="-90 0 0"
+            color="#9d9d9d"
+            radius="4" />
+        `);
+        scene.appendChild(floor);
+
+        resolve();
+      });
+    });
   }
 
   // remove all items from scene
@@ -79,8 +120,9 @@ export function render3DScene(params = {}) {
 
   // ON RUN
 
-  setup();
-  scene.addEventListener('loaded', () => {
-    draw();
+  loadLibraries().then(() => {
+    setupScene().then(() => {
+      draw();
+    });
   });
 }

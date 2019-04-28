@@ -1,11 +1,11 @@
 
-import { createNode, createExecutableNode } from './helpers';
+import { createHTMLNode, createVRNode } from './helpers';
 import { open3DPopup } from './popup';
 
 export function add3DButton(params = {}) {
   let popup;
 
-  window.document.head.appendChild(createExecutableNode(`
+  window.document.head.appendChild(createVRNode(`
     <style>
       #html2vr-button {
         position: fixed;
@@ -28,7 +28,7 @@ export function add3DButton(params = {}) {
   `));
 
   // add enter vr button
-  const button = createNode('<button href="#" id="html2vr-button">3D</button>');
+  const button = createHTMLNode('<button href="#" id="html2vr-button">3D</button>');
 
   button.addEventListener('click', () => {
     if (popup) {

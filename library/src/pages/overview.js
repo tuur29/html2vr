@@ -1,7 +1,6 @@
 
 import {
-  createNode,
-  addGaze,
+  createVRNode,
   createHashCode,
   getProperties,
   navigate,
@@ -16,10 +15,6 @@ export class OverviewPage {
   }
 
   static draw(scene, data, params, callback) {
-    return this.drawGrid(scene, data, params, callback);
-  }
-
-  static drawGrid(scene, data, params, callback) {
     // TODO: use own selectors instead of bootstrap classes
     // TODO: make algorithm to generate grid aligned coordinates
 
@@ -48,21 +43,21 @@ export class OverviewPage {
       y -= padding + (height + 2 * padding) * row + height / 2;
 
       const id = 'grid' + createHashCode(imageUrl);
-      const image = createNode(`<img id="${id}" src="${imageUrl}">`);
+      const image = createVRNode(`<img id="${id}" src="${imageUrl}">`);
       assets.appendChild(image);
 
       // TODO: add a default background color
-      const screen = createNode(`
-          <a-box class="html2vr-element"
-            position="${x} ${y} ${z}"
-            width="${width}" height="${height}" depth="0.1"
-            src="#${id}" />
-        `);
-      scene.appendChild(screen);
-
-      addGaze(screen, () => {
+      const screen = createVRNode(`
+        <a-box class="html2vr-element clickable"
+          position="${x} ${y} ${z}"
+          width="${width}" height="${height}" depth="0.1"
+          src="#${id}" />
+      `);
+      screen.querySelector('*').addEventListener('click', () => {
         navigate(linkUrl, () => callback('refresh'));
       });
+
+      scene.appendChild(screen);
     });
   }
 }
