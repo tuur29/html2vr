@@ -77,19 +77,16 @@ export function navigate(url, callback) {
 
   // TODO: show loading icon in VR
   // wait until new document exists
-  const interval = setInterval(() => {
-    if (window.opener.location !== oldUrl) {
-      setTimeout(() => {
-        // refresh when new document has finished loading
-        if (window.opener.document.readyState === 'complete') {
-          callback('refresh');
-        } else {
-          window.opener.addEventListener('load', () => {
-            callback('refresh');
-          });
-        }
-      }, 10);
-      clearInterval(interval);
+  setTimeout(() => {
+    if (window.opener.location === oldUrl) return;
+
+    // refresh when new document has finished loading
+    if (window.opener.document.readyState === 'complete') {
+      callback('refresh');
+    } else {
+      window.opener.addEventListener('load', () => {
+        callback('refresh');
+      });
     }
   }, 50);
 }
