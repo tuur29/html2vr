@@ -1,5 +1,5 @@
 
-function getParentWindow() {
+export function getParentWindow() {
   // Chrome doesnt allow you to change url via window.opener
   if (window.opener.location) {
     return window.opener;
@@ -10,6 +10,7 @@ function getParentWindow() {
 
 // redirect all messages from popup to parent
 export function linkConsoleToParent() {
+  // TODO: doesn't always work
   window.console = getParentWindow().console;
 }
 
@@ -68,52 +69,4 @@ export function startLoading() {
 }
 export function stopLoading() {
   document.getElementById('spinner').setAttribute('visible', 'false');
-}
-
-function finishNavigation(callback) {
-  callback('refresh');
-  linkConsoleToParent();
-  stopLoading();
-}
-
-function waitForNavigation(callback) {
-  const oldUrl = getParentWindow().location.href;
-
-  const interval = setInterval(() => {
-    if (getParentWindow().location.href !== oldUrl) {
-      clearInterval(interval);
-      // refresh when new document has finished loading
-      if (getParentWindow().document.readyState === 'complete') {
-        finishNavigation(callback);
-      } else {
-        getParentWindow().addEventListener('load', () => {
-          finishNavigation(callback);
-        });
-      }
-    }
-  }, 50);
-}
-
-export function navigate(url, callback) {
-  startLoading();
-  getParentWindow().location.href = url;
-  waitForNavigation(callback);
-}
-
-export function addBackButton(scene, callback) {
-  // render a back button
-  const back = createVRNode(`
-    <a-box
-      class="html2vr-element clickable"
-      position="-4 4 -6"
-      width="1" height="1" depth="0.1"
-      color="white"
-      src="#back" />
-  `);
-  back.querySelector('*').addEventListener('click', () => {
-    startLoading();
-    getParentWindow().history.back();
-    waitForNavigation(callback);
-  });
-  scene.appendChild(back);
 }

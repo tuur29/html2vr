@@ -1,10 +1,9 @@
 
-import { createVRNode, addBackButton } from '../helpers';
+import { createVRNode } from '../helpers';
 
 export class ErrorPage {
+  // eslint-disable-next-line no-unused-vars
   static draw(scene, data, params, callback) {
-    addBackButton(scene, callback);
-
     const text = createVRNode(`
         <a-text 
           class="html2vr-element"

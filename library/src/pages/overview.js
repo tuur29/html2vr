@@ -3,8 +3,9 @@ import {
   createVRNode,
   createHashCode,
   getProperties,
-  navigate,
 } from '../helpers';
+
+import { navigate } from '../navigation';
 
 export class OverviewPage {
   static getData(sourceDOM) {

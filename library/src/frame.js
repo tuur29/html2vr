@@ -5,6 +5,7 @@ import {
   getProperties,
   linkConsoleToParent,
 } from './helpers';
+import { addBackButton, addStartPage } from './navigation';
 import { OverviewPage, DetailPage, ErrorPage } from './pages';
 
 export function render3DScene(params = {}) {
@@ -14,6 +15,7 @@ export function render3DScene(params = {}) {
   // load the needed libraries and setup the 3d environment
   function loadLibraries() {
     linkConsoleToParent();
+    addStartPage();
 
     // load webvr library
     script = document.createElement('script');
@@ -95,6 +97,7 @@ export function render3DScene(params = {}) {
     clear();
     // eslint-disable-next-line no-use-before-define
     draw();
+    addBackButton(scene, refresh);
   }
 
   function sceneCallback(data) {
