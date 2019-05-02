@@ -6,6 +6,8 @@ import {
   linkConsoleToParent,
   hideCursor,
   showCursor,
+  convertColorToRGB,
+  lightenDarkenColor,
 } from './helpers';
 import { addBackButton, addStartPage } from './navigation';
 import { OverviewPage, DetailPage, ErrorPage } from './pages';
@@ -111,13 +113,15 @@ export function render3DScene(params = {}) {
           </a-entity>
         `));
 
-        // TODO: darken backgroundcolor for floor
+        const rgbColor = convertColorToRGB(params.backgroundColor).replace(/ /g, '');
+        const darkendColor = lightenDarkenColor(-0.3, rgbColor);
+
         // Add floor
         scene.appendChild(createVRNode(`
           <a-circle class="html2vr-permanent"
             position="0 -1.5 0"
             rotation="-90 0 0"
-            color="#9d9d9d"
+            color="${darkendColor}"
             radius="4" />
         `));
 

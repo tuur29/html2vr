@@ -95,3 +95,23 @@ export function stopLoading() {
   lastCursorState = null;
   document.getElementById('spinner').setAttribute('visible', 'false');
 }
+
+// Other
+
+// Source: https://stackoverflow.com/a/1573154
+export function convertColorToRGB(color) {
+  const d = document.createElement('div');
+  d.style.color = color;
+  document.body.appendChild(d);
+  const hex = window.getComputedStyle(d).color;
+  document.body.removeChild(d);
+  return hex;
+}
+
+/* eslint-disable */
+// Source: https://stackoverflow.com/a/13542669
+export function lightenDarkenColor(p,c) {
+  var i=parseInt,r=Math.round,[a,b,c,d]=c.split(","),P=p<0,t=P?0:255*p,P=P?1+p:1-p;
+  return"rgb"+(d?"a(":"(")+r(i(a[3]=="a"?a.slice(5):a.slice(4))*P+t)+","+r(i(b)*P+t)+","+r(i(c)*P+t)+(d?","+d:")");
+}
+/* eslint-enable */
