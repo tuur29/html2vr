@@ -162,16 +162,25 @@ export function render3DScene(params = {}) {
 
   function draw() {
     // draw correct type
-    const type = getProperties(window.opener.document)['data-html2vr-page-type'];
+    const props = getProperties(window.opener.document);
+    const type = props['data-html2vr-page-type'];
+    const customRenderFunction = props['data-html2vr-custom-render'];
 
+    // pre defined renderers
     if (type === 'detail') {
       const data = DetailPage.getData(window.opener.document);
       DetailPage.draw(scene, data, params, sceneCallback);
     } else if (type === 'grid') {
       const data = OverviewPage.getData(window.opener.document);
       OverviewPage.draw(scene, data, params, sceneCallback);
-    } else {
+    } else if (!customRenderFunction) {
       ErrorPage.draw(scene, null, params, sceneCallback);
+    }
+
+    // custom render function
+    if (customRenderFunction && window.opener[customRenderFunction]) {
+      const elements = window.opener[customRenderFunction](params);
+      scene.appendChild(createVRNode(elements));
     }
   }
 

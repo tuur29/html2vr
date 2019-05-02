@@ -10,8 +10,8 @@
     <link href="https://getbootstrap.com/docs/4.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
     <link href="../assets/styles.css" rel="stylesheet">
 </head>
-<body data-html2vr-page-type="detail" data-html2vr-selector="h1">
-    
+<body data-html2vr-page-type="detail" data-html2vr-selector="h1" data-html2vr-custom-render="render">
+
     <header>
         <div class="navbar navbar-dark bg-dark shadow-sm">
             <div class="container d-flex justify-content-between">
@@ -103,6 +103,24 @@
 
     <script src="../../../library/dist/html2vr.min.js"></script>
     <script>
+        function render(params) {
+            console.log(params);
+
+            const elements = Array.from(document.querySelectorAll('main p'));
+            const text = elements.map(p => p.textContent).join('\n\n')
+            return `
+                <a-text
+                    class="html2vr-element"
+                    position="0 -1.5 -6"
+                    value="${text}"
+                    anchor="left"
+                    geometry="primitive:plane; width: auto; height: "
+                    material="opacity: 0"
+                    color="black"
+                />
+            `;
+        }
+
         html2vr.init();
     </script>
 

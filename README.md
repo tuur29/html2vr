@@ -10,7 +10,7 @@ This repo contains 3 modules:
 - [**demo**](./demo): a demo site (hosted on github pages) to discover the functionality
 - [**extension**](./extension): browser extension that loads this library on some sites like youtube, sketchfab...
 
-> Note: Firefox is currently the only supported browser!
+> Note: Firefox is currently the only fully supported browser!
 
 ---
 
