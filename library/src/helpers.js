@@ -63,10 +63,35 @@ export function getScene() {
   return document.getElementById('scene');
 }
 
+let lastCursorState = true;
+
+function saveCursorState() {
+  const cursor = document.querySelector('#cursor');
+  lastCursorState = cursor.getAttribute('visible');
+}
+
+export function showCursor() {
+  const cursor = document.querySelector('#cursor');
+  cursor.setAttribute('visible', true);
+  cursor.setAttribute('cursor', 'fuse: true');
+}
+
+export function hideCursor() {
+  const cursor = document.querySelector('#cursor');
+  cursor.setAttribute('visible', false);
+  cursor.setAttribute('cursor', 'fuse: false');
+}
+
 // show/hide loading indicator
 export function startLoading() {
+  saveCursorState();
+  showCursor();
   document.getElementById('spinner').setAttribute('visible', 'true');
 }
 export function stopLoading() {
+  if (lastCursorState === false) {
+    hideCursor();
+  }
+  lastCursorState = null;
   document.getElementById('spinner').setAttribute('visible', 'false');
 }
