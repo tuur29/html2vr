@@ -128,7 +128,9 @@ export function render3DScene(params = {}) {
         // Hide cursor when 3/6DOF controllers connected
         scene.addEventListener('enter-vr', () => {
           setTimeout(() => {
-            if (navigator.getGamepads().length > 0) {
+            // on chrome getGamepads results in a GamepadList
+            // with 4 controllers set to 0 instead of emtpy array
+            if (Object.values(navigator.getGamepads()).filter(v => v !== null).length > 0) {
               hideCursor();
             }
           }, 50);
