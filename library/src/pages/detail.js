@@ -2,8 +2,8 @@
 import {
   createVRNode,
   getProperties,
+  getParentWindow,
 } from '../helpers';
-
 import { navigate } from '../navigation';
 
 export class DetailPage {
@@ -30,22 +30,32 @@ export class DetailPage {
 
     // Temporary elements to demo complex navigation (left is error, right is home)
     const errortest = createVRNode(`
-      <a-box class="html2vr-element clickable"
-        position="-2 1.5 -6"
-        width="2" height="2" depth="0.1" />
+      <a-text
+        class="html2vr-element clickable"
+        position="-2.5 1.5 -5.9"
+        geometry="primitive:plane; width: 2; height: "
+        color="black"
+        value="Load error" />
     `);
     errortest.querySelector('*').addEventListener('click', () => {
-      navigate('http://localhost:8080/1.html', () => callback('refresh'));
+      if (process.env.NODE_ENV === 'development') {
+        navigate('http://localhost:8080/error.html', () => callback('refresh'));
+      } else {
+        navigate('https://tuur29.github.io/html2vr/', () => callback('refresh'));
+      }
     });
     scene.appendChild(errortest);
 
     const hometest = createVRNode(`
-      <a-box class="html2vr-element clickable"
-        position="4 1.5 -6"
-        width="2" height="2" depth="0.1" />
+      <a-text
+        class="html2vr-element clickable"
+        position="4 1.5 -5.9"
+        geometry="primitive:plane; width: 2; height: "
+        color="black"
+        value="Load previous" />
     `);
     hometest.querySelector('*').addEventListener('click', () => {
-      navigate('http://localhost:8080/index.html', () => callback('refresh'));
+      navigate(getParentWindow().document.referrer, () => callback('refresh'));
     });
     scene.appendChild(hometest);
   }
