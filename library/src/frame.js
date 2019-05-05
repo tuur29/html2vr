@@ -130,7 +130,8 @@ export function render3DScene(params = {}) {
           setTimeout(() => {
             // on chrome getGamepads results in a GamepadList
             // with 4 controllers set to 0 instead of emtpy array
-            if (Object.values(navigator.getGamepads()).filter(v => v !== null).length > 0) {
+            // cardboard or other mobile headset might have a cardboard button without axis
+            if (Object.values(navigator.getGamepads()).filter(v => v !== null || (v.axis && v.axis.length > 0)).length > 0) {
               hideCursor();
             }
           }, 50);

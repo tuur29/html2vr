@@ -9,6 +9,7 @@ module.exports = merge(common, {
   devServer: {
     inline: false,
     open: false,
+    host: '0.0.0.0',
     contentBase: [
       './dist',
       '../demo/site',
