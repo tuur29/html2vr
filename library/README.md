@@ -9,8 +9,6 @@ Add both `html2vr.js` and `html2vr.js` to your project structure (same folder). 
 
 Lastly you need to add the `data-html2vr-page-type` and `data-html2vr-selector` properties to the body element of each page you want to support.
 
-> Note: Firefox is currently the only fully supported browser!
-
 ## Properties and settings
 
 Settings: [view defaultConfig.js](./src/defaultConfig.js)
@@ -76,6 +74,18 @@ Full example: View the source code of [demo page 2](../demo/site/detail/2.html).
 Dev: `npm start`
 
 Build release: `npm run build`
+
+## Compatibility
+
+- Use Mozilla Firefox (66) for the best experience (Tested with Rift CV1)
+
+- Most things should work in Chrome (not WebVR)
+
+- Tested on first generation Cardboard
+
+- VR and controller doesn't work in GearVR (only 3D)
+
+More info: [webvr.rocks](https://webvr.rocks/)
 
 ## Links
 

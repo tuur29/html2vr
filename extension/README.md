@@ -2,11 +2,12 @@
 # HTML2VR Browser extensions
 
 ## Chrome
+
 > Planned but not currently not yet in development.
 
 ## Firefox
-> Planned but not currently not yet in development.
 
+> Planned but not currently not yet in development.
 
 ## Links
 
