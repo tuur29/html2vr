@@ -1,0 +1,32 @@
+
+html, body {
+    font-family: sans-serif;
+    width: 200px;
+    min-height: 150px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+}
+
+.message {
+    display: flex;
+    justify-content: center;
+}
+
+#info {
+    color: blue;
+}
+
+#button {
+
+}
+
+#success {
+    color: green;
+}
+
+
+#error {
+    color: red;
+}

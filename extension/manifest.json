@@ -1,0 +1,26 @@
+{
+    "manifest_version": 2,
+    "name": "HTML2VR",
+    "version": "1.0",
+    "description": "Converts a webpage to a 3D environment that can be accessed in VR.",
+    "homepage_url": "https://tuur29.github.io/html2vr/extension/",
+    "icons": {
+        "128": "icons/icon-128.png"
+    },
+
+    "permissions": [
+        "activeTab"
+    ],
+    "browser_action": {
+        "default_icon": "icons/icon_bw-64.png",
+        "default_title": "HTML2VR",
+        "default_popup": "popup/popup.html",
+        "browser_style": true
+    },
+
+    "applications": {
+        "gecko": {
+            "id": "html2vr@tuurlievens.net"
+        }
+    }
+}
