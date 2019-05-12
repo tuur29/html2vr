@@ -14,12 +14,16 @@
   function inject() {
     // find correct config
     if (helpers.checkIfParametersSet()) return;
-    if (!site || !site.properties) return;
+    if (!site) return;
 
     // load correct properties from supportedUrls array
-    Object.entries(site.properties).forEach(([key, value]) => {
+    Object.entries(site.properties || {}).forEach(([key, value]) => {
       document.body.setAttribute('data-html2vr-' + key, value);
     });
+
+    if (site.render) {
+      document.body.setAttribute('data-html2vr-custom-render', 'renderHTML2VR');
+    }
   }
 
   function start() {
@@ -51,6 +55,18 @@
       </script>
     `);
     window.document.head.appendChild(scripts);
+
+    if (site.render) { // define your own custom renderer
+      const str = `
+        <script id="html2vr-custom-render">
+          function renderHTML2VR(params) {
+            return (${site.render.toString()})(params);
+          }
+        </script>
+      `;
+      const script = window.document.createRange().createContextualFragment(str);
+      window.document.body.appendChild(script);
+    }
   }
 
   function reset() {
