@@ -12,6 +12,7 @@ export class DetailPage {
     return sourceDOM.querySelector(props['data-html2vr-selector']);
   }
 
+  // eslint-disable-next-line no-unused-vars
   static draw(scene, data, params, callback) {
     // show detail
     const text = createVRNode(`
@@ -32,7 +33,7 @@ export class DetailPage {
     const errortest = createVRNode(`
       <a-text
         class="html2vr-element clickable"
-        position="-2.5 1.5 -5.9"
+        position="-2.5 0 -5.9"
         geometry="primitive:plane; width: 2; height: "
         color="black"
         value="Load error" />
@@ -49,7 +50,7 @@ export class DetailPage {
     const hometest = createVRNode(`
       <a-text
         class="html2vr-element clickable"
-        position="4 1.5 -5.9"
+        position="4 0 -5.9"
         geometry="primitive:plane; width: 2; height: "
         color="black"
         value="Load previous" />

@@ -16,7 +16,6 @@ export class OverviewPage {
   }
 
   static draw(scene, data, params, callback) {
-    // TODO: use own selectors instead of bootstrap classes
     // TODO: make algorithm to generate grid aligned coordinates
 
     const assets = scene.querySelector('a-assets');
@@ -49,9 +48,9 @@ export class OverviewPage {
 
       // TODO: add a default background color
       const screen = createVRNode(`
-        <a-box class="html2vr-element clickable"
+        <a-image class="html2vr-element clickable"
           position="${x} ${y} ${z}"
-          width="${width}" height="${height}" depth="0.1"
+          width="${width}" height="${height}"
           src="#${id}" />
       `);
       screen.querySelector('*').addEventListener('click', () => {

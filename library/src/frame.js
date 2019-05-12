@@ -10,7 +10,12 @@ import {
   lightenDarkenColor,
 } from './helpers';
 import { addBackButton, addStartPage } from './navigation';
-import { OverviewPage, DetailPage, ErrorPage } from './pages';
+import {
+  OverviewPage,
+  DetailPage,
+  ErrorPage,
+  ImagePage,
+} from './pages';
 
 export function render3DScene(params = {}) {
   let scene;
@@ -174,7 +179,10 @@ export function render3DScene(params = {}) {
     const customRenderFunction = props['data-html2vr-custom-render'];
 
     // pre defined renderers
-    if (type === 'detail') {
+    if (ImagePage.pageIsImageFile(window.opener.document)) {
+      const data = ImagePage.getData(window.opener.document);
+      ImagePage.draw(scene, data, params, sceneCallback);
+    } else if (type === 'detail') {
       const data = DetailPage.getData(window.opener.document);
       DetailPage.draw(scene, data, params, sceneCallback);
     } else if (type === 'grid') {
