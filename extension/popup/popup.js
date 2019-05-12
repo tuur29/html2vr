@@ -6,10 +6,12 @@ const API = browser || chrome;
 
 // Variables
 let disabled = false;
-let injected = false;
+let started = false;
 let selectedTab = {};
 const supportedURLs = [ // Based on list in index.js
-  '*://*.tuurlievens.net/*',
+  '*://*.tuurlievens.net/',
+  '*://*.tuurlievens.net/home',
+  '*://*.tuurlievens.net/android',
 ];
 
 // Helper functions, some also found in library/src/helpers.js
@@ -38,7 +40,7 @@ function setup(tabs) {
   // show message and disable button if WebGL/VR not supported
   if (!detectWebGL()) {
     $('#error').innerHTML = 'WebGL isn\'t supported by your API.<br>Make sure you GPU drivers are up to date.';
-    $('#button').setAttribute('disabled');
+    $('#button').setAttribute('disabled', true);
     disabled = true;
     return;
   }
@@ -57,7 +59,7 @@ function setup(tabs) {
       />
       <span>The site ${selectedTab.title} is not supported.</span>
     `;
-    $('#button').setAttribute('disabled');
+    $('#button').setAttribute('disabled', true);
     disabled = true;
     return;
   }
@@ -72,18 +74,19 @@ function setup(tabs) {
 // Toggle button
 $('#button').addEventListener('click', () => {
   if (disabled) return;
+  started = !started;
 
-  injected = !injected;
-  $('#info').innerHTML = injected ? 'Please allow API popups on the current site' : '';
-  $('#button').innerHTML = injected ? 'Start in VR' : 'Disable';
+  $('#info').innerHTML = started ? 'Please allow API popups on the current site' : '';
+  $('#button').innerHTML = started ? 'Disable' : 'Start in VR';
+
+  API.storage.local.set({ started });
 
   setTimeout(() => {
     API.tabs.sendMessage(selectedTab.id, {
-      command: injected ? 'inject' : 'reset',
+      command: started ? 'start' : 'reset',
     });
   }, 500);
 });
 
 // Initialize
 API.tabs.query({ active: true, currentWindow: true }).then(setup);
-API.tabs.executeScript({ file: '../index.js' });

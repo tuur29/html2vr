@@ -15,12 +15,14 @@ export function addStartPage() {
 }
 
 function finishNavigation(callback) {
-  if (historyStack[historyStack.length - 1] !== getParentWindow().location.href) {
-    historyStack.push(getParentWindow().location.href);
-  }
-  callback('refresh');
-  linkConsoleToParent();
-  stopLoading();
+  setTimeout(() => {
+    if (historyStack[historyStack.length - 1] !== getParentWindow().location.href) {
+      historyStack.push(getParentWindow().location.href);
+    }
+    callback('refresh');
+    linkConsoleToParent();
+    stopLoading();
+  }, 50); // Allow page scripts and browser extension to dynamically add properties to body
 }
 
 function waitForNavigation(callback) {

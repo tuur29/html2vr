@@ -28,5 +28,5 @@ export function openPopup(params = {}) {
     ...params,
   };
 
-  open3DPopup(config);
+  return open3DPopup(config);
 }

@@ -56,12 +56,12 @@ export function open3DPopup(params = {}) {
   `, popup.document));
 
   const scripts = createVRNode(`
-    <script id="lib" src="${location}"></script>
-    <script>
-        var script = document.head.querySelector("#lib");
+    <script id="html2vr-lib" src="${location}"></script>
+    <script id="html2vr-lib-init">
+        var script = document.head.querySelector("#html2vr-lib");
         script.onload = function() {
-          html2vr.render(JSON.parse('${JSON.stringify(params)}'))
-        }
+          html2vr.render(JSON.parse('${JSON.stringify(params)}'));
+        };
     </script>
   `, popup.document);
 
