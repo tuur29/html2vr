@@ -13,7 +13,7 @@ let selectedTab = {};
 function setup(tabs) {
   [selectedTab] = tabs;
 
-  API.storage.local.get('started').then((data) => {
+  API.load('started').then((data) => {
     // eslint-disable-next-line prefer-destructuring
     started = data.started;
 
@@ -64,14 +64,14 @@ helpers.$('#button').addEventListener('click', () => {
   helpers.$('#info').innerHTML = started ? 'Please allow API popups on the current site' : '';
   helpers.$('#button').innerHTML = started ? 'Disable' : 'Start in VR';
 
-  API.storage.local.set({ started });
+  API.save({ started });
 
   setTimeout(() => {
-    API.tabs.sendMessage(selectedTab.id, {
+    API.sendMessage(selectedTab.id, {
       command: started ? 'start' : 'reset',
     });
   }, 500); // timeout so people can read popup message
 });
 
 // Initialize
-API.tabs.query({ active: true, currentWindow: true }).then(setup);
+API.queryTabs({ active: true, currentWindow: true }).then(setup);

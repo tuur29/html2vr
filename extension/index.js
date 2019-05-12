@@ -4,8 +4,6 @@
 /* global API */
 /* global supportedURLs */
 
-// TODO: support chrome
-
 // eslint-disable-next-line func-names
 (function () {
   if (window.hasHTML2VRRun) return;
@@ -32,11 +30,11 @@
     // TODO: popup closing and listener dont work after navigating away from page
     // reset button in popup on vrpopup close
     document.addEventListener('html2vr-popupClosed', () => {
-      API.storage.local.set({ started: false });
+      API.save({ started: false });
     }, false);
 
     // open vr popup
-    const scriptLocation = API.runtime.getURL('./lib/html2vr.min.js');
+    const scriptLocation = API.getURL('./lib/html2vr.min.js');
     const scripts = window.document.createRange().createContextualFragment(`
       <script id="html2vr-lib" src="${scriptLocation}"></script>
       <script id="html2vr-lib-init">
@@ -66,7 +64,7 @@
   // initialize html2vr
   if (site) {
     inject();
-    API.runtime.onMessage.addListener((message) => {
+    API.addMessageListener((message) => {
       if (message.command === 'start') {
         start();
       } else if (message.command === 'reset') {
