@@ -27,8 +27,13 @@
   function start() {
     if (helpers.checkIfLibraryIsLoaded()) return;
     if (!site) return;
-
     if (helpers.$('#html2vr-lib')) return;
+
+    // TODO: popup closing and listener dont work after navigating away from page
+    // reset button in popup on vrpopup close
+    document.addEventListener('html2vr-popupClosed', () => {
+      API.storage.local.set({ started: false });
+    }, false);
 
     // open vr popup
     const scriptLocation = API.runtime.getURL('./lib/html2vr.min.js');
@@ -37,8 +42,14 @@
       <script id="html2vr-lib-init">
         var script = document.head.querySelector("#html2vr-lib");
         script.onload = function() {
-          html2vr.openPopup(JSON.parse('${JSON.stringify(site.settings || {})}'))
-        }
+          var popup = html2vr.openPopup(JSON.parse('${JSON.stringify(site.settings || {})}'));
+          popup.onbeforeunload = function() {
+            document.dispatchEvent(new Event('html2vr-popupClosed'));
+          };
+          document.addEventListener('html2vr-closePopup', () => {
+            if (popup) popup.close();
+          }, false);
+        };
       </script>
     `);
     window.document.head.appendChild(scripts);
@@ -49,6 +60,7 @@
       el.parentElement.removeChild(el);
     });
     window.hasHTML2VRRun = false;
+    document.dispatchEvent(new Event('html2vr-closePopup'));
   }
 
   // initialize html2vr
