@@ -1,63 +1,21 @@
 // This script is loaded inside the active tab when HTML2VR is enabled from popup
 
+/* global helpers */
+/* global API */
+/* global supportedURLs */
+
 // TODO: support chrome
-/* eslint-disable */
-const API = browser || chrome;
-/* eslint-enable */
 
 // eslint-disable-next-line func-names
 (function () {
   if (window.hasHTML2VRRun) return;
   window.hasHTML2VRRun = true;
 
-  const supportedURLs = [ // Needs to be synced with supportedURLs in popup.html
-    {
-      url: '*://*.tuurlievens.net/',
-      properties: { // you can omit "data-html2vr-"
-        'page-type': 'grid',
-        selector: '#nav a',
-      },
-      settings: {
-        columnCount: 2,
-      },
-    },
-    {
-      url: '*://*.tuurlievens.net/home',
-      properties: { // you can omit "data-html2vr-"
-        'page-type': 'grid',
-        selector: '#nav a',
-      },
-      settings: {
-        columnCount: 2,
-      },
-    },
-    {
-      url: '*://*.tuurlievens.net/android',
-      properties: { // you can omit "data-html2vr-"
-        'page-type': 'grid',
-        selector: '.card .photo img',
-      },
-    },
-  ];
-
-  // Source: https://stackoverflow.com/a/32402438
-  function matchRule(str, rule) { // function to use simple wildcard matching (like in manifest.json)
-    return new RegExp('^' + rule.split('*').join('.*') + '$').test(str);
-  }
-
-  const site = supportedURLs.find(s => matchRule(window.location.href, s.url));
-
-  // check if site natively implemented HTML2VR and instead use those parameters
-  function checkIfLibraryAlreadyImplemented() {
-    // based on function in ../library/src/helpers.js
-    const props = Array.from(document.body.attributes)
-      .filter(a => a.name.indexOf('data-html2vr') === 0);
-    return props.length > 0;
-  }
+  const site = supportedURLs.find(s => helpers.matchRule(window.location.href, s.url));
 
   function inject() {
     // find correct config
-    if (checkIfLibraryAlreadyImplemented()) return;
+    if (helpers.checkIfParametersSet()) return;
     if (!site || !site.properties) return;
 
     // load correct properties from supportedUrls array
@@ -67,10 +25,10 @@ const API = browser || chrome;
   }
 
   function start() {
-    if (checkIfLibraryAlreadyImplemented()) return;
+    if (helpers.checkIfLibraryIsLoaded()) return;
     if (!site) return;
 
-    if (document.querySelector('#html2vr-lib')) return;
+    if (helpers.$('#html2vr-lib')) return;
 
     // open vr popup
     const scriptLocation = API.runtime.getURL('./lib/html2vr.min.js');
