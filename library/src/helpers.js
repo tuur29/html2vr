@@ -10,12 +10,15 @@ export function getParentWindow() {
 
 // also redirect all messages from popup to parent
 export function linkConsoleToParent() {
-  window.console.log = (...args) => getParentWindow().console.log(...args);
-  window.console.error = (...args) => getParentWindow().console.error(...args);
-  window.console.warning = (...args) => getParentWindow().console.warning(...args);
-  window.console.info = (...args) => getParentWindow().console.info(...args);
-  window.console.debug = (...args) => getParentWindow().console.debug(...args);
-  window.console.table = (...args) => getParentWindow().console.table(...args);
+  const methodeNames = ['log', 'error', 'warning', 'info', 'debug', 'table'];
+
+  methodeNames.forEach((method) => {
+    const oldFunction = window.console[method];
+    window.console[method] = (...args) => {
+      getParentWindow().console[method](...args);
+      oldFunction(...args);
+    };
+  });
 }
 
 // HTML

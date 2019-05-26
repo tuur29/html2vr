@@ -7,7 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint src",
     "start": "webpack-dev-server --config webpack.dev.js --color",
-    "build": "webpack --config webpack.prod.js"
+    "build": "webpack --config webpack.prod.js",
+    "extensiondebug": "webpack --config webpack.dev.js && cp ./dist/html2vr.min.js ../extension/lib/html2vr.min.js"
   },
   "repository": {
     "type": "git",

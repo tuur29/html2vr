@@ -5,11 +5,13 @@ import {
 } from '../helpers';
 
 export class ImagePage {
+  // selector should point to img element or be undefined in which case first image is selected
+  // this page is also used when navigating to an actual image file
   static getData(sourceDOM) {
     const props = getProperties(sourceDOM);
-    // selector should point to img element or be undefined in which case first image is selected
-    // this page is also used when navigating to an actual image file
-    return sourceDOM.querySelector(props['data-html2vr-selector'] || 'img');
+    const data = sourceDOM.querySelector(props['data-html2vr-selector'] || 'img');
+    console.log('imageData', data);
+    return data;
   }
 
   static pageIsImageFile(doc) {

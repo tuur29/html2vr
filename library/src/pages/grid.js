@@ -8,12 +8,12 @@ import {
 import { navigate } from '../navigation';
 
 export class GridPage {
+  // Selector should return element of the form <el href=""><img src="" /></el>, items become links if 'el' is a
   static getData(sourceDOM) {
     const props = getProperties(sourceDOM);
-    // Selector should return element of the form <el href=""><img src="" /></el>, items become links if 'el' is a
-    return Array.from(
-      sourceDOM.querySelectorAll(props['data-html2vr-selector']),
-    );
+    const data = Array.from(sourceDOM.querySelectorAll(props['data-html2vr-selector']));
+    console.log('gridData', data);
+    return data;
   }
 
   static draw(scene, data, params, callback) {
@@ -28,9 +28,9 @@ export class GridPage {
     // add links to scene
     data.forEach((il, i) => {
       const linkUrl = il.href;
-      const images = Array.from(il.children).filter(el => el.tagName === 'IMG');
-      if (images.length < 1) return;
-      const imageUrl = images[0].src;
+      const imageEl = il.querySelector('img');
+      if (!imageEl) return;
+      const imageUrl = imageEl.src;
 
       const col = i % params.columnCount; // x coord
       const row = (i - col) / params.columnCount; // y coord
@@ -45,7 +45,7 @@ export class GridPage {
       y -= padding + (height + 2 * padding) * row + height / 2;
 
       const id = 'grid' + createHashCode(imageUrl);
-      const image = createVRNode(`<img id="${id}" src="${imageUrl}">`);
+      const image = createVRNode(`<img id="${id}" src="${imageUrl}" crossorigin>`);
       assets.appendChild(image);
 
       const item = createVRNode(`

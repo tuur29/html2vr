@@ -7,10 +7,12 @@ import {
 import { navigate } from '../navigation';
 
 export class DetailPage {
+  // Maily for testing purposes, just displays textcontent of selected object + error and home link
   static getData(sourceDOM) {
     const props = getProperties(sourceDOM);
-    // Maily for testing purposes, just displays textcontent of selected object + error and home link
-    return sourceDOM.querySelector(props['data-html2vr-selector']);
+    const data = sourceDOM.querySelector(props['data-html2vr-selector']);
+    console.log('detailData', data);
+    return data;
   }
 
   // eslint-disable-next-line no-unused-vars

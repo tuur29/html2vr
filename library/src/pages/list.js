@@ -8,12 +8,12 @@ import {
 import { navigate } from '../navigation';
 
 export class ListPage {
+  // Selector should return element of the form <el href=""><img src="" />Text</el> (see grid.js, optional img)
   static getData(sourceDOM) {
     const props = getProperties(sourceDOM);
-    // Selector should return element of the form <el href=""><img src="" />Text</el> (see grid.js, optional img)
-    return Array.from(
-      sourceDOM.querySelectorAll(props['data-html2vr-selector']),
-    );
+    const data = Array.from(sourceDOM.querySelectorAll(props['data-html2vr-selector']));
+    console.log('listData', data);
+    return data;
   }
 
   static draw(scene, data, params, callback) {
@@ -28,17 +28,17 @@ export class ListPage {
 
     // add links to scene
     data.forEach((il, i) => {
-      const links = Array.from(il.children).filter(el => el.tagName === 'A');
-      const linkUrl = links.length > 0 ? links[0].href : null;
+      const linkEl = il.querySelector('a');
+      const linkUrl = linkEl ? linkEl.href : null;
 
       const y = 4.5 - (padding + height) * i; // 1.5 is eye height
       let elementString = '';
 
-      const images = Array.from(il.children).filter(el => el.tagName === 'IMG');
-      if (images.length > 0) {
-        const imageUrl = images[0].src;
+      const imageEl = il.querySelector('img');
+      if (imageEl) {
+        const imageUrl = imageEl.src;
         const id = 'grid' + createHashCode(imageUrl);
-        const image = createVRNode(`<img id="${id}" src="${imageUrl}">`);
+        const image = createVRNode(`<img id="${id}" src="${imageUrl}" crossorigin>`);
         assets.appendChild(image);
 
         elementString += `
