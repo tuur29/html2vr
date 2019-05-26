@@ -41,7 +41,6 @@ export class ListPage {
         const image = createVRNode(`<img id="${id}" src="${imageUrl}">`);
         assets.appendChild(image);
 
-        // TODO: add a default background color
         elementString += `
           <a-image
             class="html2vr-element ${linkUrl ? 'clickable' : ''}" 

@@ -2,7 +2,6 @@
 
 const path = require('path');
 
-// TODO: don't allow in nodejs
 module.exports = {
   entry: {
     html2vr: './src/index.js',
@@ -29,7 +28,6 @@ module.exports = {
     path: path.resolve(__dirname, 'dist'),
     filename: 'html2vr.min.js',
     library: 'html2vr',
-    // TODO: what is libraryTarget exactly?
     libraryTarget: 'var',
   },
 };

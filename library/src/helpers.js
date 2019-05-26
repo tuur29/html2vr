@@ -8,10 +8,14 @@ export function getParentWindow() {
   return window.parent;
 }
 
-// redirect all messages from popup to parent
+// also redirect all messages from popup to parent
 export function linkConsoleToParent() {
-  // TODO: doesn't always work
-  // window.console = getParentWindow().console;
+  window.console.log = (...args) => getParentWindow().console.log(...args);
+  window.console.error = (...args) => getParentWindow().console.error(...args);
+  window.console.warning = (...args) => getParentWindow().console.warning(...args);
+  window.console.info = (...args) => getParentWindow().console.info(...args);
+  window.console.debug = (...args) => getParentWindow().console.debug(...args);
+  window.console.table = (...args) => getParentWindow().console.table(...args);
 }
 
 // HTML

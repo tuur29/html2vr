@@ -18,7 +18,6 @@ export class GridPage {
 
   static draw(scene, data, params, callback) {
     if (data.length < 1) return false;
-    // TODO: make algorithm to generate grid aligned coordinates
 
     const assets = scene.querySelector('a-assets');
     const width = 1.6;
@@ -49,7 +48,6 @@ export class GridPage {
       const image = createVRNode(`<img id="${id}" src="${imageUrl}">`);
       assets.appendChild(image);
 
-      // TODO: add a default background color
       const item = createVRNode(`
         <a-image class="html2vr-element ${linkUrl ? 'clickable' : ''}"
           position="${x} ${y} ${z}"
