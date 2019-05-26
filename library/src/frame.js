@@ -11,7 +11,7 @@ import {
 } from './helpers';
 import { addBackButton, addStartPage } from './navigation';
 import {
-  OverviewPage,
+  GridPage,
   DetailPage,
   ErrorPage,
   ImagePage,
@@ -186,8 +186,8 @@ export function render3DScene(params = {}) {
       const data = DetailPage.getData(window.opener.document);
       DetailPage.draw(scene, data, params, sceneCallback);
     } else if (type === 'grid') {
-      const data = OverviewPage.getData(window.opener.document);
-      OverviewPage.draw(scene, data, params, sceneCallback);
+      const data = GridPage.getData(window.opener.document);
+      GridPage.draw(scene, data, params, sceneCallback);
     } else if (!customRenderFunction) {
       ErrorPage.draw(scene, null, params, sceneCallback);
     }

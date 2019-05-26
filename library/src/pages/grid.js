@@ -7,7 +7,7 @@ import {
 
 import { navigate } from '../navigation';
 
-export class OverviewPage {
+export class GridPage {
   static getData(sourceDOM) {
     const props = getProperties(sourceDOM);
     return Array.from(
