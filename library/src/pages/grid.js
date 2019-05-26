@@ -29,7 +29,7 @@ export class GridPage {
     data.forEach((il, i) => {
       const linkUrl = il.href;
       const imageEl = il.querySelector('img');
-      if (!imageEl) return;
+      if (!imageEl || imageEl.src.indexOf('.svg') > -1) return;
       const imageUrl = imageEl.src;
 
       const col = i % params.columnCount; // x coord

@@ -2,42 +2,44 @@
 /* eslint-disable no-unused-vars */
 
 /**
-Example: (more info on https://tuur29.github.io/html2vr/library/)
-
-{
-  'url': '*://*.domain.com/*',
-  'properties': {
-    'page-type': 'grid',
-    'selector': '#nav a',
-  },
-  'settings': {
-    'columnCount': 2,
-  },
-  render: (settings) => {
-    return '<a-text value="hi" />';
-  },
-},
-
+* Example: (more info on https://tuur29.github.io/html2vr/library/)
+*
+* @example
+* {
+*   'url': '*://*.domain.com/*',
+*   'properties': { // you can omit "data-html2vr-"
+*     'page-type': 'grid',
+*     'selector': '#nav a',
+*   },
+*   'settings': {
+*     'columnCount': 2,
+*   },
+*   render: (settings) => {
+*     return '<a-text value="hi" />';
+*   },
+* },
+*
 */
 const supportedURLs = [
-  // part of Portfolio
+  // Android page of Portfolio
   {
     'url': '*://*.tuurlievens.net/android',
     'properties': {
       'page-type': 'grid',
-      'selector': '.card .photo img',
+      'selector': '.card .photo:not(.hidden)',
     },
   },
 
   // Reddit
   {
     'url': '*://old.reddit.com/r/*/comments/*',
-    'properties': { // you can omit "data-html2vr-"
+    'properties': {
       'page-type': 'detail',
       'selector': 'a.title',
     },
     'render': (params) => {
-      const src = 'https:' + document.querySelector('.thing .thumbnail img').getAttribute('src');
+      // unfortunatly this doesnt work thanks to CORS
+      const src = document.querySelector('.thing .thumbnail img').src;
       return `
         <a-image
           class="html2vr-element clickable"
@@ -49,10 +51,58 @@ const supportedURLs = [
   },
   {
     'url': '*://old.reddit.com/*',
-    'properties': { // you can omit "data-html2vr-"
+    'properties': {
       'page-type': 'grid',
-      'selector': '.thing .thumbnail img',
+      'selector': '.thing .thumbnail',
     },
   },
+
+  // Imgur
+  {
+    'url': '*://imgur.com/gallery/*',
+    'properties': {
+      'page-type': 'image',
+      'selector': '.post-image img',
+    },
+    'settings': {
+      'backgroundColor': '#333',
+    },
+  },
+  {
+    'url': '*://imgur.com/t/*/*',
+    'properties': {
+      'page-type': 'image',
+      'selector': '.post-image img',
+    },
+    'settings': {
+      'backgroundColor': '#333',
+    },
+  },
+  {
+    'url': '*://imgur.com/*',
+    'properties': {
+      'page-type': 'grid',
+      'selector': '.Post-item',
+    },
+    'settings': {
+      'backgroundColor': '#333',
+    },
+  },
+
+  // Youtube (Cors blocks all images)
+  // {
+  //   'url': '*://*.youtube.com/watch?*',
+  //   'properties': {
+  //     'page-type': 'detail',
+  //     'selector': '#info-contents h1',
+  //   },
+  // },
+  // {
+  //   'url': '*://*.youtube.com/*',
+  //   'properties': {
+  //     'page-type': 'list',
+  //     'selector': 'ytd-thumbnail',
+  //   },
+  // },
 
 ];

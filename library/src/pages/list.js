@@ -35,7 +35,7 @@ export class ListPage {
       let elementString = '';
 
       const imageEl = il.querySelector('img');
-      if (imageEl) {
+      if (imageEl && imageEl.src.indexOf('.svg') < 0) {
         const imageUrl = imageEl.src;
         const id = 'grid' + createHashCode(imageUrl);
         const image = createVRNode(`<img id="${id}" src="${imageUrl}" crossorigin>`);
