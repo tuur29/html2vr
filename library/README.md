@@ -16,7 +16,7 @@ Settings: [view defaultConfig.js](./src/defaultConfig.js)
 Properties:
 
 ```html
-    data-html2vr-page-type=""        <!-- grid, detail, image -->
+    data-html2vr-page-type=""        <!-- grid, list, detail, image, more info in pages/name.js in getData() -->
     data-html2vr-selector=""         <!-- querySelector(All) -->
     data-html2vr-custom-render=""    <!-- function name (gets params) -->
 ```

@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<!-- Source: https://getbootstrap.com/docs/4.2/examples/ -->
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>HTML2VR Example</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="https://getbootstrap.com/docs/4.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <link href="assets/styles.css" rel="stylesheet">
+</head>
+<body data-html2vr-page-type="image" data-html2vr-selector=".pickedimage">
+
+    <main role="main">
+
+        <div class="album py-5 bg-light">
+            <div class="container">
+
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="card mb-4 shadow-sm">
+                            <a class="thumbnail" href="./detail/1.html">
+                                <img class="bd-placeholder-img card-img-top pickedimage" src="./assets/images/6c9b606c548141e7bfd4aa3beab7fa6d.jpeg" />
+                            </a>
+                            <div class="card-body">
+                                <h5 class="card-title"><a href="./detail/2.html">Title 1</a></h5>
+                                <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Erat enim Polemonis. Iam contemni non poteris equidem etiam.</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-sm btn-outline-secondary" onclick='window.location = "./detail/1.html"'>View</button>
+                                        <button type="button" class="btn btn-sm btn-outline-secondary" onclick='window.location = "./detail/1.html"'>Edit</button>
+                                    </div>
+                                    <small class="text-muted">5 stars</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="card mb-4 shadow-sm">
+                            <a class="thumbnail" href="./detail/2.html">
+                                <img class="bd-placeholder-img card-img-top" src="./assets/images/23a2e84fa0e245d3be13621bb1bdc291.jpeg" />
+                            </a>
+                            <div class="card-body">
+                                <h5 class="card-title"><a href="./detail/1.html">Title 4</a></h5>
+                                <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Erat enim Polemonis. Iam contemni non poteris equidem etiam.</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-sm btn-outline-secondary" onclick='window.location = "./detail/1.html"'>View</button>
+                                        <button type="button" class="btn btn-sm btn-outline-secondary" onclick='window.location = "./detail/1.html"'>Edit</button>
+                                    </div>
+                                    <small class="text-muted">5 stars</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <footer class="text-muted">
+        <div class="container">
+            <p class="float-right">
+                <a href="#">Back to top</a>
+            </p>
+            <p>This example is based the <a href="https://getbootstrap.com/docs/4.2/examples/">Album example from Bootstrap</a>. </p>
+            <p> It is a simple imitation of <a href="https://sketchfab.com">Sketchfab</a>, which I also use for thumbnails and the embedded 3d viewer.</p>
+        </div>
+    </footer>
+
+    <script src="../../library/dist/html2vr.min.js"></script>
+    <script>
+        html2vr.init();
+    </script>
+
+</body>
+</html>

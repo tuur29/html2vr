@@ -10,12 +10,8 @@ import {
   lightenDarkenColor,
 } from './helpers';
 import { addBackButton, addStartPage } from './navigation';
-import {
-  GridPage,
-  DetailPage,
-  ErrorPage,
-  ImagePage,
-} from './pages';
+import { drawPage } from './pages/index';
+import { ErrorPage } from './pages/error';
 
 export function render3DScene(params = {}) {
   let scene;
@@ -178,24 +174,16 @@ export function render3DScene(params = {}) {
     const type = props['data-html2vr-page-type'];
     const customRenderFunction = props['data-html2vr-custom-render'];
 
-    // pre defined renderers
-    if (ImagePage.pageIsImageFile(window.opener.document)) {
-      const data = ImagePage.getData(window.opener.document);
-      ImagePage.draw(scene, data, params, sceneCallback);
-    } else if (type === 'detail') {
-      const data = DetailPage.getData(window.opener.document);
-      DetailPage.draw(scene, data, params, sceneCallback);
-    } else if (type === 'grid') {
-      const data = GridPage.getData(window.opener.document);
-      GridPage.draw(scene, data, params, sceneCallback);
-    } else if (!customRenderFunction) {
-      ErrorPage.draw(scene, null, params, sceneCallback);
-    }
+    const hasDrawn = drawPage(type, scene, params, sceneCallback);
 
     // custom render function
     if (customRenderFunction && window.opener[customRenderFunction]) {
       const elements = window.opener[customRenderFunction](params);
       scene.appendChild(createVRNode(elements));
+    }
+
+    if (!hasDrawn && !customRenderFunction) {
+      ErrorPage.draw(scene, null, params, sceneCallback);
     }
   }
 

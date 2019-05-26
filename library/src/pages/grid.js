@@ -10,31 +10,34 @@ import { navigate } from '../navigation';
 export class GridPage {
   static getData(sourceDOM) {
     const props = getProperties(sourceDOM);
+    // Selector should return element of the form <el href=""><img src="" /></el>, items become links if 'el' is a
     return Array.from(
       sourceDOM.querySelectorAll(props['data-html2vr-selector']),
     );
   }
 
   static draw(scene, data, params, callback) {
+    if (data.length < 1) return false;
     // TODO: make algorithm to generate grid aligned coordinates
 
     const assets = scene.querySelector('a-assets');
+    const width = 1.6;
+    const height = 0.9;
+    const padding = 0.2;
+    const z = -6;
 
     // add links to scene
     data.forEach((il, i) => {
-      const linkUrl = il.parentElement.href;
-      const imageUrl = il.src;
-
-      const width = 1.6;
-      const height = 0.9;
-      const padding = 0.2;
+      const linkUrl = il.href;
+      const images = Array.from(il.children).filter(el => el.tagName === 'IMG');
+      if (images.length < 1) return;
+      const imageUrl = images[0].src;
 
       const col = i % params.columnCount; // x coord
       const row = (i - col) / params.columnCount; // y coord
 
       let x = 0; // 0 is centered
       let y = 1.5; // 1.5 is eye height
-      const z = -6;
 
       x -= (params.columnCount * width + params.columnCount * padding * 2) / 2; // start drawing at left bound
       y += 2.5 * (2 * padding + height);
@@ -47,17 +50,21 @@ export class GridPage {
       assets.appendChild(image);
 
       // TODO: add a default background color
-      const screen = createVRNode(`
-        <a-image class="html2vr-element clickable"
+      const item = createVRNode(`
+        <a-image class="html2vr-element ${linkUrl ? 'clickable' : ''}"
           position="${x} ${y} ${z}"
           width="${width}" height="${height}"
           src="#${id}" />
       `);
-      screen.querySelector('*').addEventListener('click', () => {
-        navigate(linkUrl, () => callback('refresh'));
-      });
+      if (linkUrl) {
+        item.querySelector('*').addEventListener('click', () => {
+          navigate(linkUrl, () => callback('refresh'));
+        });
+      }
 
-      scene.appendChild(screen);
+      scene.appendChild(item);
     });
+
+    return true;
   }
 }

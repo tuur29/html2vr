@@ -11,7 +11,7 @@ export function getParentWindow() {
 // redirect all messages from popup to parent
 export function linkConsoleToParent() {
   // TODO: doesn't always work
-  window.console = getParentWindow().console;
+  // window.console = getParentWindow().console;
 }
 
 // HTML

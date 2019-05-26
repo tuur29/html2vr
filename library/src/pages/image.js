@@ -1,19 +1,25 @@
 
 import {
   createVRNode,
+  getProperties,
 } from '../helpers';
 
 export class ImagePage {
+  static getData(sourceDOM) {
+    const props = getProperties(sourceDOM);
+    // selector should point to img element or be undefined in which case first image is selected
+    // this page is also used when navigating to an actual image file
+    return sourceDOM.querySelector(props['data-html2vr-selector'] || 'img');
+  }
+
   static pageIsImageFile(doc) {
     return doc.body.children.length === 1 && doc.body.children[0].nodeName === 'IMG';
   }
 
-  static getData(sourceDOM) {
-    return sourceDOM.querySelector('img');
-  }
-
   // eslint-disable-next-line no-unused-vars
   static draw(scene, data, params, callback) {
+    if (!data || !data.src) return false;
+
     const { width, height } = data.getBoundingClientRect();
     const aspect = height / width;
     const newWidth = 8;
@@ -23,11 +29,13 @@ export class ImagePage {
       <a-image
         class="html2vr-element"
         position="0 1.5 -6"
-        src="${data.getAttribute('src')}"
+        src="${data.src}"
         width="${newWidth}"
         height="${newHeight}"
       />
     `);
     scene.appendChild(image);
+
+    return true;
   }
 }

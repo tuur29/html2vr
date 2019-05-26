@@ -104,7 +104,7 @@
     <script src="../../../library/dist/html2vr.min.js"></script>
     <script>
         function render(params) {
-            console.log(params);
+            console.log('Manually adding rest of textcontent to page, with params:' ,params);
 
             const elements = Array.from(document.querySelectorAll('main p'));
             const text = elements.map(p => p.textContent).join('\n\n')

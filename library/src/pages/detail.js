@@ -9,17 +9,19 @@ import { navigate } from '../navigation';
 export class DetailPage {
   static getData(sourceDOM) {
     const props = getProperties(sourceDOM);
+    // Maily for testing purposes, just displays textcontent of selected object + error and home link
     return sourceDOM.querySelector(props['data-html2vr-selector']);
   }
 
   // eslint-disable-next-line no-unused-vars
   static draw(scene, data, params, callback) {
-    // show detail
+    if (!data) return false;
+
     const text = createVRNode(`
       <a-text
         class="html2vr-element"
         position="0 1.5 -6"
-        value="${data.innerHTML}"
+        value="${data.textContent}"
         anchor="left"
         geometry="primitive:plane; width: auto; height: "
         material="opacity: 0"
@@ -56,8 +58,10 @@ export class DetailPage {
         value="Load previous" />
     `);
     hometest.querySelector('*').addEventListener('click', () => {
-      navigate(getParentWindow().document.referrer, () => callback('refresh'));
+      navigate(getParentWindow().document.referrer || '../', () => callback('refresh'));
     });
     scene.appendChild(hometest);
+
+    return true;
   }
 }
