@@ -8,6 +8,7 @@ import {
   showCursor,
   convertColorToRGB,
   lightenDarkenColor,
+  getParentWindow,
 } from './helpers';
 import { addBackButton, addStartPage } from './navigation';
 import { drawPage } from './pages/index';
@@ -170,15 +171,15 @@ export function render3DScene(params = {}) {
 
   function draw() {
     // draw correct type
-    const props = getProperties(window.opener.document);
+    const props = getProperties(getParentWindow().document);
     const type = props['data-html2vr-page-type'];
     const customRenderFunction = props['data-html2vr-custom-render'];
 
     const hasDrawn = drawPage(type, scene, params, sceneCallback);
 
     // custom render function
-    if (customRenderFunction && window.opener[customRenderFunction]) {
-      const elements = window.opener[customRenderFunction](params);
+    if (customRenderFunction && getParentWindow()[customRenderFunction]) {
+      const elements = getParentWindow()[customRenderFunction](params);
       scene.appendChild(createVRNode(elements));
     }
 

@@ -42,7 +42,9 @@
     "webpack-merge": "^4.2.1"
   },
   "dependencies": {
-    "aframe": "^0.9.1"
+    "aframe": "^0.9.1",
+    "aframe-extras": "^6.0.0",
+    "super-hands": "^3.0.0"
   },
   "husky": {
     "hooks": {

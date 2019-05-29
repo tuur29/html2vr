@@ -11,6 +11,11 @@ const common = require('./webpack.common');
 module.exports = merge(common, {
   mode: 'production',
   plugins: [
+    new webpack.DefinePlugin({
+      ENV: {
+        DEV: false,
+      },
+    }),
     new CleanWebpackPlugin(['dist']),
     new webpack.IgnorePlugin(/aframe/),
     { // copy library to extension folder
