@@ -3,9 +3,9 @@ import { createVRNode } from './helpers';
 
 export function open3DPopup(params = {}) {
   const location = params.scriptLocation || Array.from(document.querySelectorAll('script'))
-    .filter(
+    .find(
       s => s.src.includes('html2vr.min.js'),
-    )[0].src
+    ).src
     .replace(/[^/]*$/, '')
         + 'html2vr.min.js';
 
