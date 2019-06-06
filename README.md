@@ -33,6 +33,4 @@ Find the [documentation here](./library).
 
 ## [Extension](./extension)
 
-> Planned but currently not yet in development.
-
 Extensions for Chrome and Firefox that uses the HTML2VR library to generate a VR version.
