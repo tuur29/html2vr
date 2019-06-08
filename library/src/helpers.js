@@ -89,6 +89,11 @@ export function hideCursor() {
   cursor.setAttribute('cursor', 'fuse: false');
 }
 
+export function detectDOFControllers() {
+  // Chrome uses gamepad.axis while Firefox uses gamepad.axes
+  return Object.values(navigator.getGamepads()).filter(v => v !== null && ((v.axes && v.axes.length > 0) || (v.axis && v.axis.length > 0))).length > 0;
+}
+
 // show/hide loading indicator
 export function startLoading() {
   saveCursorState();

@@ -9,6 +9,7 @@ import {
   convertColorToRGB,
   lightenDarkenColor,
   getParentWindow,
+  detectDOFControllers,
 } from './helpers';
 import { addBackButton, addStartPage } from './navigation';
 import { drawPage } from './pages/index';
@@ -96,22 +97,25 @@ export function render3DScene(params = {}) {
               super-hands="colliderEvent: raycaster-intersection;
                           colliderEventProperty: els;
                           colliderEndEvent:raycaster-intersection-cleared;
-                          colliderEndEventProperty: clearedEls;" />
+                          colliderEndEventProperty: clearedEls;">
+            </a-mixin>
             <a-mixin id="controller-right" mixin="pointer"
               vive-controls="hand: right" oculus-touch-controls="hand: right"
               windows-motion-controls="hand: right"
-              gearvr-controls daydream-controls oculus-go-controls />
+              gearvr-controls daydream-controls oculus-go-controls>
+            </a-mixin>
             <a-mixin id="controller-left" mixin="pointer"
               vive-controls="hand: left" oculus-touch-controls="hand: left"
-              windows-motion-controls="hand: left" />
+              windows-motion-controls="hand: left">
+            </a-mixin>
           </a-assets>
         `));
 
         // Add controllers themselves
         scene.appendChild(createVRNode(`
           <a-entity id="controllers">
-            <a-entity id="rhand" mixin="controller-right"></a-entity>
-            <a-entity id="lhand" mixin="controller-left"></a-entity>
+            <a-entity visible="${detectDOFControllers()}" id="rhand" mixin="controller-right"></a-entity>
+            <a-entity visible="${detectDOFControllers()}" id="lhand" mixin="controller-left"></a-entity>
           </a-entity>
         `));
 
@@ -133,9 +137,7 @@ export function render3DScene(params = {}) {
             // on chrome getGamepads results in a GamepadList
             // with 4 controllers set to 0 instead of emtpy array
             // cardboard or other mobile headset might have a cardboard button without axis
-            if (Object.values(navigator.getGamepads()).filter(v => v !== null || (v.axis && v.axis.length > 0)).length > 0) {
-              hideCursor();
-            }
+            if (detectDOFControllers()) hideCursor();
           }, 50);
         });
 
