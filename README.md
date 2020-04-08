@@ -1,4 +1,6 @@
 
+> This library was never finished because of API limitations and has been archived.
+
 # HTML2VR
 
 html2vr is a native JS library that allows a webdeveloper to easily add a user interface in VR to an existing html page. Think of it as a library like a photo lightbox or a CSS framework.
